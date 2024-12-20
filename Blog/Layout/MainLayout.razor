@@ -1,3 +1,65 @@
 ﻿@inherits LayoutComponentBase
 
+<nav class="navbar">
+    <ul class="navbar-menu">
+        <li class="navbar-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="navbar-item">
+            <a href="/about">About</a>
+        </li>
+    </ul>
+</nav>
+
 @Body
+
+<style>
+    /*
+    내비게이션 바와 항목에 대한 스타일.
+
+    .navbar:
+        - 배경색을 연회색(#f8f9fa)으로 설정.
+        - 내용 주위에 10px의 패딩 추가.
+        - 기본 마진 제거.
+        - 연회색(#e7e7e7)으로 하단 테두리 추가.
+
+    .navbar-menu:
+        - 기본 목록 스타일 제거.
+        - 기본 패딩 제거.
+        - 메뉴 항목을 플렉스 컨테이너로 표시.
+        - 각 메뉴 항목 사이에 10px 간격 추가.
+
+    .navbar-item a:
+        - 링크를 블록 요소로 표시.
+        - 링크 텍스트 주위에 8px의 패딩 추가.
+        - 기본 텍스트 장식 제거.
+        - 부모로부터 텍스트 색상 상속.
+
+    .navbar-item a:hover:
+        - 링크에 마우스를 올리면 텍스트에 밑줄 추가.
+    */
+
+    .navbar {
+        background-color: #f8f9fa;
+        padding: 5px;
+        border-bottom: 1px solid #e7e7e7;
+    }
+
+    .navbar-menu {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        gap: 10px;
+    }
+
+    .navbar-item a {
+        display: block;
+        padding: 8px;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .navbar-item a:hover {
+        text-decoration: underline;
+    }
+</style>
