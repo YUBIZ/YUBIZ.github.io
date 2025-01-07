@@ -1,0 +1,19 @@
+﻿@if (PostUris.Any())
+{
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3">
+        @foreach (var item in PostUris)
+        {
+            <div class="col">
+                <PostCard PostUri="@item" />
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="card-header text-center">
+            <h1>게시글이 없습니다.</h1>
+        </div>
+    </div>
+}
