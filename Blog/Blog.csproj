@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="dotnet script Scripts\EnumerateFileList.csx wwwroot\posts wwwroot\file-list\posts.json --exclude-patterns template.md --strip-path wwwroot" />
+  </Target>
+
 </Project>
