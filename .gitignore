@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 # 제외 경로
 Blog/wwwroot/file-list/
+Blog/wwwroot/commit-history/

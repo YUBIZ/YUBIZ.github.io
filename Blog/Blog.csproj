@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="dotnet script Scripts\EnumerateFileList.csx wwwroot\posts wwwroot\file-list\posts.json --exclude-patterns template.md --strip-path wwwroot" />
+    <Exec Command="dotnet script Scripts\EnumerateFileList.csx wwwroot\posts wwwroot\file-list\posts.json --exclude-patterns template.md --strip-path wwwroot&#xD;&#xA;dotnet script Scripts\EnumerateCommitHistory.csx wwwroot\posts wwwroot\commit-history\posts --exclude-patterns template.md" />
   </Target>
 
 </Project>
