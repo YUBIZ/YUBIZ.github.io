@@ -1,0 +1,11 @@
+﻿@page "/posts/{*PostNameWithCategory}"
+
+<PageTitle>@Title</PageTitle>
+
+@Content
+
+@code
+{
+    [Parameter]
+    public required string PostNameWithCategory { get; set; }
+}
