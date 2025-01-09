@@ -1,10 +1,9 @@
 ﻿using Blog.Models;
-using Blog.Extensions;
-using System.Net.Http.Json;
+using Blog.Services;
 
 namespace Blog.Components;
 
-public partial class PostCard(HttpClient httpClient)
+public partial class PostCard(StaticResourceService staticResourceService)
 {
     private string Title { get; set; } = string.Empty;
     private string Summary { get; set; } = string.Empty;
@@ -14,12 +13,12 @@ public partial class PostCard(HttpClient httpClient)
 
     protected override async Task OnInitializedAsync()
     {
-        PostMetadata postMetadata = await httpClient.GetFromYamlFrontMatterAsync<PostMetadata>(Path.ChangeExtension(PostUri, "md"));
+        PostMetadata postMetadata = await staticResourceService.GetPostMetadataAsync(PostUri);
         Title = postMetadata.Title;
         Summary = postMetadata.Summary;
         Tags = postMetadata.Tags;
 
-        Commit[]? commitHistory = await httpClient.GetFromJsonAsync<Commit[]>($"commit-history/{Path.ChangeExtension(PostUri, "json")}");
+        Commit[]? commitHistory = await staticResourceService.GetCommitHistoryAsync(PostUri);
         PublishedDateTime = (commitHistory?.FirstOrDefault() ?? default).Timestamp;
         UpdatedDateTime = (commitHistory?.LastOrDefault() ?? default).Timestamp;
     }
