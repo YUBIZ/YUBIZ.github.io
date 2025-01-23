@@ -1,12 +1,16 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+<div class="page">
+    <NavMenu />
+    <div class="flex-fill d-flex flex-column overflow-y-auto">
+        <main class="flex-fill">
+            <article class="p-4">
+                @Body
+            </article>
+        </main>
+
+        <footer class="bg-body-secondary text-end p-3">
+            © Copyright 2025 YUBIZ
+        </footer>
+    </div>
 </div>
