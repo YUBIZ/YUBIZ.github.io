@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Blog.Pages;
 
-public partial class Post(StaticResourceService staticResourceService)
+public partial class PostView(StaticResourceService staticResourceService)
 {
     private string PostUri => $"posts/{PostNameWithCategory}";
     private string? Title { get; set; }
