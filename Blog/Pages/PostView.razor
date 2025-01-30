@@ -2,6 +2,23 @@
 
 <PageTitle>@Title</PageTitle>
 
+<div class="p-5 text-center bg-body-tertiary shadow">
+    <h1>@Title</h1>
+    <div class="d-grid">
+        <small class="text-body-secondary">@(PublishedDateTime)에 게시됨.</small>
+        @if (UpdatedDateTime != PublishedDateTime)
+        {
+            <small class="text-body-secondary">@(UpdatedDateTime)에 수정됨.</small>
+        }
+    </div>
+    @if (Tags?.Length > 0)
+    {
+        @foreach (var item in Tags)
+        {
+            <div class="badge bg-secondary me-1">@item</div>
+        }
+    }
+</div>
 <div class="p-4">
     @Content
 </div>
