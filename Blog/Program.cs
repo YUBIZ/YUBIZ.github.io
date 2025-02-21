@@ -9,5 +9,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton(new ConfigService(builder.Configuration));
+builder.Services.AddScoped<GitHubService>();
 
 await builder.Build().RunAsync();
