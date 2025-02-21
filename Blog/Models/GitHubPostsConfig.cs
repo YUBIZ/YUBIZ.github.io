@@ -2,7 +2,8 @@
 
 public class GitHubPostsConfig
 {
-    public required string AccessToken { get; set; }
+    // @TODO: 토큰을 가져오는 방법 찾기
+    //public required string AccessToken { get; set; }
     public required string Owner { get; set; }
     public required string Repository { get; set; }
     public required string Branch { get; set; }

@@ -14,7 +14,8 @@ public class GitHubService(HttpClient httpClient, ConfigService configService)
         gitHubPostsConfig ??= GitHubPostsConfig;
 
         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(gitHubPostsConfig.UserAgent);
-        httpClient.DefaultRequestHeaders.Authorization = new("Bearer", gitHubPostsConfig.AccessToken);
+        // @TODO: 토큰을 가져오는 방법 찾기
+        //httpClient.DefaultRequestHeaders.Authorization = new("Bearer", gitHubPostsConfig.AccessToken);
 
         var response = await httpClient.GetAsync($"https://api.github.com/repos/{gitHubPostsConfig.Owner}/{gitHubPostsConfig.Repository}/commits?sha={gitHubPostsConfig.Branch}&path={path}");
 
@@ -43,7 +44,8 @@ public class GitHubService(HttpClient httpClient, ConfigService configService)
         gitHubPostsConfig ??= GitHubPostsConfig;
 
         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(gitHubPostsConfig.UserAgent);
-        httpClient.DefaultRequestHeaders.Authorization = new("Bearer", GitHubPostsConfig.AccessToken);
+        // @TODO: 토큰을 가져오는 방법 찾기
+        //httpClient.DefaultRequestHeaders.Authorization = new("Bearer", GitHubPostsConfig.AccessToken);
 
         var response = await httpClient.GetAsync($"https://api.github.com/repos/{gitHubPostsConfig.Owner}/{gitHubPostsConfig.Repository}/contents/{path}?ref={gitHubPostsConfig.Branch}");
 
