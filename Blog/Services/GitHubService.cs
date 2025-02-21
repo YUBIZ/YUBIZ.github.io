@@ -8,22 +8,27 @@ public class GitHubService(HttpClient httpClient, ConfigService configService)
 {
     private GitHubPostsConfig GitHubPostsConfig => configService.GitHubPostsConfig;
 
+    public async Task<string> GetContentAsync(string path, GitHubPostsConfig? gitHubPostsConfig = null)
+    {
+        gitHubPostsConfig ??= GitHubPostsConfig;
+
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(gitHubPostsConfig.UserAgent);
+        httpClient.DefaultRequestHeaders.Authorization = new("Bearer", gitHubPostsConfig.AccessToken);
+
+        var response = await httpClient.GetAsync($"https://api.github.com/repos/{gitHubPostsConfig.Owner}/{gitHubPostsConfig.Repository}/contents/{path}?ref={gitHubPostsConfig.Branch}");
+
+        if (!response.IsSuccessStatusCode) return string.Empty;
+
+        return Encoding.UTF8.GetString(
+           Convert.FromBase64String(
+               JsonDocument.Parse(
+                   await response.Content.ReadAsStringAsync()
+               ).RootElement.GetProperty("content").GetString() ?? "")
+           );
+    }
+
     public async Task<string[]> GetPostListAsync()
     {
-        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Blog");
-        httpClient.DefaultRequestHeaders.Authorization = new("Bearer", GitHubPostsConfig.AccessToken);
-
-        var response = await httpClient.GetAsync($"https://api.github.com/repos/{GitHubPostsConfig.Owner}/{GitHubPostsConfig.Repository}/contents/{GitHubPostsConfig.PostListFilePath}?ref={GitHubPostsConfig.Branch}");
-
-        if (!response.IsSuccessStatusCode) return [];
-
-        return JsonSerializer.Deserialize<string[]>(
-            Encoding.UTF8.GetString(
-                Convert.FromBase64String(
-                    JsonDocument.Parse(
-                        await response.Content.ReadAsStringAsync()
-                    ).RootElement.GetProperty("content").GetString() ?? "")
-                )
-            ) ?? [];
+        return JsonSerializer.Deserialize<string[]>(await GetContentAsync(GitHubPostsConfig.PostListFilePath)) ?? [];
     }
 }
