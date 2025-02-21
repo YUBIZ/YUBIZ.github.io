@@ -1,10 +1,8 @@
-﻿using Blog.Models;
-using Blog.Services;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace Blog.Pages;
 
-public partial class PostView(StaticResourceService staticResourceService)
+public partial class PostView
 {
     private string PostUri => $"posts/{PostNameWithCategory}";
     private string? Title { get; set; }
@@ -15,14 +13,8 @@ public partial class PostView(StaticResourceService staticResourceService)
 
     protected override async Task OnInitializedAsync()
     {
-        PostMetadata postMetadata = await staticResourceService.GetPostMetadataAsync(PostUri);
-        Title = postMetadata.Title;
-        Tags = postMetadata.Tags;
-
-        Commit[]? commitHistory = await staticResourceService.GetCommitHistoryAsync(PostUri);
-        PublishedDateTime = (commitHistory?.FirstOrDefault() ?? default).Timestamp;
-        UpdatedDateTime = (commitHistory?.LastOrDefault() ?? default).Timestamp;
-
-        Content = await staticResourceService.GetPostContentAsync(PostUri);
+        // @TODO: 게시글 메타데이터를 가져오는 로직 구현하기
+        // @TODO: 게시글 커밋 이력을 가져오는 로직 구현하기
+        // @TODO: 게시글 내용을 가져오는 로직 구현하기
     }
 }

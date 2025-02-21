@@ -1,9 +1,6 @@
-﻿using Blog.Models;
-using Blog.Services;
+﻿namespace Blog.Components;
 
-namespace Blog.Components;
-
-public partial class PostCard(StaticResourceService staticResourceService)
+public partial class PostCard
 {
     private string Title { get; set; } = string.Empty;
     private string Summary { get; set; } = string.Empty;
@@ -13,13 +10,7 @@ public partial class PostCard(StaticResourceService staticResourceService)
 
     protected override async Task OnInitializedAsync()
     {
-        PostMetadata postMetadata = await staticResourceService.GetPostMetadataAsync(PostUri);
-        Title = postMetadata.Title;
-        Summary = postMetadata.Summary;
-        Tags = postMetadata.Tags;
-
-        Commit[]? commitHistory = await staticResourceService.GetCommitHistoryAsync(PostUri);
-        PublishedDateTime = (commitHistory?.FirstOrDefault() ?? default).Timestamp;
-        UpdatedDateTime = (commitHistory?.LastOrDefault() ?? default).Timestamp;
+        // @TODO: 게시글 메타데이터를 가져오는 로직 구현하기
+        // @TODO: 게시글 커밋 이력을 가져오는 로직 구현하기
     }
 }

@@ -13,12 +13,4 @@
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
-  <Target Name="PreBuild" Condition="'$(OS)' == 'Windows_NT'" BeforeTargets="PreBuildEvent">
-    <Exec Command="dotnet script Scripts\EnumerateFileList.csx wwwroot\posts wwwroot\file-list\posts.json --exclude-patterns template.md --strip-path wwwroot&#xD;&#xA;dotnet script Scripts\EnumerateCommitHistory.csx wwwroot\posts wwwroot\commit-history\posts --exclude-patterns template.md" />
-  </Target>
-
-  <Target Name="PreBuild" Condition="'$(OS)' != 'Windows_NT'" BeforeTargets="PreBuildEvent">
-    <Exec Command="dotnet script Scripts/EnumerateFileList.csx wwwroot/posts wwwroot/file-list/posts.json --exclude-patterns template.md --strip-path wwwroot&#xD;&#xA;dotnet script Scripts/EnumerateCommitHistory.csx wwwroot/posts wwwroot/commit-history/posts --exclude-patterns template.md" />
-  </Target>
-
 </Project>
