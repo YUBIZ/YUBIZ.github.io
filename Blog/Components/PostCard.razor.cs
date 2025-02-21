@@ -1,6 +1,9 @@
-﻿namespace Blog.Components;
+﻿using Blog.Models;
+using Blog.Services;
 
-public partial class PostCard
+namespace Blog.Components;
+
+public partial class PostCard(GitHubService gitHubService)
 {
     private string Title { get; set; } = string.Empty;
     private string Summary { get; set; } = string.Empty;
@@ -10,7 +13,14 @@ public partial class PostCard
 
     protected override async Task OnInitializedAsync()
     {
-        // @TODO: 게시글 메타데이터를 가져오는 로직 구현하기
-        // @TODO: 게시글 커밋 이력을 가져오는 로직 구현하기
+        PostMetadata postMetadata = await gitHubService.GetPostMetadataAsync(PostUri);
+
+        Title = postMetadata.Title;
+        Summary = postMetadata.Summary;
+        Tags = postMetadata.Tags;
+
+        Commit[] commits = await gitHubService.GetCommitsAsync(PostUri);
+        PublishedDateTime = commits.Last().Timestamp;
+        UpdatedDateTime = commits.First().Timestamp;
     }
 }
