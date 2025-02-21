@@ -7,4 +7,5 @@ public class GitHubPostsConfig
     public required string Repository { get; set; }
     public required string Branch { get; set; }
     public required string PostListFilePath { get; set; }
+    public required string UserAgent { get; set; }
 }
