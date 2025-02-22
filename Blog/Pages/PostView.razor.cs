@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blog.Models;
+using Blog.Services;
+using Markdig;
+using Microsoft.AspNetCore.Components;
 
 namespace Blog.Pages;
 
-public partial class PostView
+public partial class PostView(GitHubService gitHubService)
 {
-    private string PostUri => $"posts/{PostNameWithCategory}";
+    private string PostUri => Path.ChangeExtension($"Posts/{PostNameWithCategory}", "md");
     private string? Title { get; set; }
     private string[]? Tags { get; set; }
     public DateTime PublishedDateTime { get; private set; }
@@ -13,8 +16,15 @@ public partial class PostView
 
     protected override async Task OnInitializedAsync()
     {
-        // @TODO: 게시글 메타데이터를 가져오는 로직 구현하기
-        // @TODO: 게시글 커밋 이력을 가져오는 로직 구현하기
-        // @TODO: 게시글 내용을 가져오는 로직 구현하기
+        PostMetadata postMetadata = await gitHubService.GetPostMetadataAsync(PostUri);
+        Title = postMetadata.Title;
+        Tags = postMetadata.Tags;
+
+        Commit[] commits = await gitHubService.GetCommitsAsync(PostUri);
+        PublishedDateTime = commits.Last().Timestamp;
+        UpdatedDateTime = commits.First().Timestamp;
+
+        MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().UseBootstrap().Build();
+        Content = (MarkupString)Markdown.ToHtml(await gitHubService.GetContentAsync(PostUri), markdownPipeline);
     }
 }
