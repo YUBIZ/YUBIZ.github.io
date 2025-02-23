@@ -7,7 +7,7 @@ namespace Blog.Pages;
 
 public partial class PostView(GitHubService gitHubService)
 {
-    private string PostUri => Path.ChangeExtension($"Posts/{PostNameWithCategory}", "md");
+    private string PostUri => $"Posts/{PostNameWithCategory}";
     private string? Title { get; set; }
     private string[]? Tags { get; set; }
     public DateTime PublishedDateTime { get; private set; }
