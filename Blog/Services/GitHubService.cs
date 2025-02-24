@@ -27,13 +27,13 @@ public class GitHubService(HttpClient httpClient, ConfigService configService)
             .Select(
             e => new Commit(
                 e.GetProperty("commit")
-                .GetProperty("message")
-                .GetString() ?? "",
+                 .GetProperty("message")
+                 .GetString() ?? "",
                 e.GetProperty("commit")
-                .GetProperty("author")
-                .GetProperty("date")
-                .GetDateTime()
-                .ToLocalTime()
+                 .GetProperty("author")
+                 .GetProperty("date")
+                 .GetDateTime()
+                 .ToLocalTime()
                 )
             )
             .ToArray();
