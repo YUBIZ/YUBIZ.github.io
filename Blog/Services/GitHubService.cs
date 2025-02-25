@@ -1,4 +1,5 @@
-using Blog.Models;
+﻿using Blog.Models;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using YamlDotNet.Serialization;
@@ -17,9 +18,18 @@ public class GitHubService(HttpClient httpClient, ConfigService configService)
         // @TODO: 토큰을 가져오는 방법 찾기
         //httpClient.DefaultRequestHeaders.Authorization = new("Bearer", gitHubPostsConfig.AccessToken);
 
-        var response = await httpClient.GetAsync($"https://api.github.com/repos/{gitHubPostsConfig.Owner}/{gitHubPostsConfig.Repository}/commits?sha={gitHubPostsConfig.Branch}&path={path}");
+        HttpResponseMessage response = await httpClient.GetAsync($"https://api.github.com/repos/{gitHubPostsConfig.Owner}/{gitHubPostsConfig.Repository}/commits?sha={gitHubPostsConfig.Branch}&path={path}");
 
-        if (!response.IsSuccessStatusCode) return [];
+        if (!response.IsSuccessStatusCode)
+        {
+            switch (response.StatusCode)
+            {
+                case System.Net.HttpStatusCode.BadRequest: throw new("잘못된 요청입니다.");
+                case System.Net.HttpStatusCode.Unauthorized: throw new("인증되지 않았습니다.");
+                case System.Net.HttpStatusCode.Forbidden: throw new("접근 권한이 없습니다.");
+                case System.Net.HttpStatusCode.NotFound: throw new("요청을 찾을 수 없습니다.");
+            }
+        }
 
         return JsonDocument.Parse(await response.Content.ReadAsStringAsync())
         .RootElement
@@ -48,6 +58,17 @@ public class GitHubService(HttpClient httpClient, ConfigService configService)
         //httpClient.DefaultRequestHeaders.Authorization = new("Bearer", GitHubPostsConfig.AccessToken);
 
         var response = await httpClient.GetAsync($"https://api.github.com/repos/{gitHubPostsConfig.Owner}/{gitHubPostsConfig.Repository}/contents/{path}?ref={gitHubPostsConfig.Branch}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            switch (response.StatusCode)
+            {
+                case System.Net.HttpStatusCode.BadRequest: throw new("잘못된 요청입니다.");
+                case System.Net.HttpStatusCode.Unauthorized: throw new("인증되지 않았습니다.");
+                case System.Net.HttpStatusCode.Forbidden: throw new("접근 권한이 없습니다.");
+                case System.Net.HttpStatusCode.NotFound: throw new("요청을 찾을 수 없습니다.");
+            }
+        }        
 
         if (!response.IsSuccessStatusCode) return string.Empty;
 
