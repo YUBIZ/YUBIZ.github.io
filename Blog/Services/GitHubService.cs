@@ -1,4 +1,4 @@
-﻿using Blog.Models;
+using Blog.Models;
 using System.Text;
 using System.Text.Json;
 using YamlDotNet.Serialization;
@@ -22,21 +22,21 @@ public class GitHubService(HttpClient httpClient, ConfigService configService)
         if (!response.IsSuccessStatusCode) return [];
 
         return JsonDocument.Parse(await response.Content.ReadAsStringAsync())
-            .RootElement
-            .EnumerateArray()
-            .Select(
-            e => new Commit(
-                e.GetProperty("commit")
-                 .GetProperty("message")
-                 .GetString() ?? "",
-                e.GetProperty("commit")
-                 .GetProperty("author")
-                 .GetProperty("date")
-                 .GetDateTime()
-                 .ToLocalTime()
-                )
+        .RootElement
+        .EnumerateArray()
+        .Select(
+        e => new Commit(
+            e.GetProperty("commit")
+             .GetProperty("message")
+             .GetString() ?? "",
+            e.GetProperty("commit")
+             .GetProperty("author")
+             .GetProperty("date")
+             .GetDateTime()
+             .ToLocalTime()
             )
-            .ToArray();
+        )
+        .ToArray();
     }
 
     public async Task<string> GetContentAsync(string path, GitHubPostsConfig? gitHubPostsConfig = null)
