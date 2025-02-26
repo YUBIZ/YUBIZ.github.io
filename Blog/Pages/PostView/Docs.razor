@@ -1,4 +1,4 @@
-﻿@page "/Posts/{*PostNameWithCategory}"
+﻿@page "/PostView/Docs/{*DocumentPath}"
 
 <PageTitle>@Title</PageTitle>
 
@@ -26,5 +26,5 @@
 @code
 {
     [Parameter]
-    public required string PostNameWithCategory { get; set; }
+    public required string DocumentPath { get; set; }
 }

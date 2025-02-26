@@ -1,4 +1,4 @@
-﻿<NavLink class="nav-link card shadow-sm" href="@PostUri">
+﻿<NavLink class="nav-link card shadow-sm" href="@Path.Combine("PostView", PostUri)">
     <div class="card-header"> 
         <h1>@Title</h1>
     </div>
@@ -27,7 +27,7 @@
 {
     /// <summary>
     /// PostUri는 게시물의 URI를 나타냅니다.
-    /// Ex. posts/category/post.md
+    /// Ex. Docs/Category/SubCategory/Doc.md
     /// </summary>
     [Parameter]
     public required string PostUri { get; set; }

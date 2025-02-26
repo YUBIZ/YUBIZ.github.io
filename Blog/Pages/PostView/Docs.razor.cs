@@ -3,11 +3,11 @@ using Blog.Services;
 using Markdig;
 using Microsoft.AspNetCore.Components;
 
-namespace Blog.Pages;
+namespace Blog.Pages.PostView;
 
-public partial class PostView(GitHubService gitHubService)
+public partial class Docs(GitHubService gitHubService)
 {
-    private string PostUri => $"Posts/{PostNameWithCategory}";
+    private string DocumentUri => $"Docs/{DocumentPath}";
     private string? Title { get; set; }
     private string[]? Tags { get; set; }
     public DateTime PublishedDateTime { get; private set; }
@@ -16,15 +16,15 @@ public partial class PostView(GitHubService gitHubService)
 
     protected override async Task OnInitializedAsync()
     {
-        PostMetadata postMetadata = await gitHubService.GetPostMetadataAsync(PostUri);
+        PostMetadata postMetadata = await gitHubService.GetPostMetadataAsync(DocumentUri);
         Title = postMetadata.Title;
         Tags = postMetadata.Tags;
 
-        Commit[] commits = await gitHubService.GetCommitsAsync(PostUri);
+        Commit[] commits = await gitHubService.GetCommitsAsync(DocumentUri);
         PublishedDateTime = commits.Last().Timestamp;
         UpdatedDateTime = commits.First().Timestamp;
 
         MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().UseBootstrap().Build();
-        Content = (MarkupString)Markdown.ToHtml(await gitHubService.GetContentAsync(PostUri), markdownPipeline);
+        Content = (MarkupString)Markdown.ToHtml(await gitHubService.GetContentAsync(DocumentUri), markdownPipeline);
     }
 }
