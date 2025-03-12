@@ -1,11 +1,11 @@
-﻿<NavLink class="link-body-emphasis link-underline-opacity-0" href="@string.Join("/", BaseUri, FileTree.Name)">
+﻿<NavLink class="link-body-emphasis link-underline-opacity-0" href="@($"{BaseUri}/{FileTree.Name}")">
     @FileTree.Name
 </NavLink>
 <div class="ms-2">
     @foreach (var item in FileTree.SubTrees)
     {
         <i class="bi bi-arrow-return-right" />
-        <FileTreeView FileTree="item" BaseUri="@string.Join("/", BaseUri, FileTree.Name)" />
+        <FileTreeView FileTree="item" BaseUri="@($"{BaseUri}/{FileTree.Name}")" />
     }
 </div>
 
