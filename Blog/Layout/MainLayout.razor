@@ -18,8 +18,16 @@
         </nav>
         <!-- 구분선 -->
         <hr />
-        <!-- 카테고리 -->
-
+        <!-- 게시글 카테고리 -->
+        <div class="flex-fill overflow-y-scroll bg-body-secondary rounded shadow p-2" style="scrollbar-width: none;">
+            @if (DocsTree != default)
+            {
+                <FileTreeView FileTree="DocsTree" BaseUri="CategoryView" />
+                <hr />
+            }
+        </div>
+        <!-- 구분선 -->
+        <hr />
     </div>
     <div class="flex-fill d-flex flex-column overflow-y-auto">
         <main class="flex-fill">
