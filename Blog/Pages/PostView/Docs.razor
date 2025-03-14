@@ -1,0 +1,30 @@
+﻿@page "/PostView/Docs/{*PostUri}"
+
+<PageTitle>@Title</PageTitle>
+
+<!--제목 및 썸네일-->
+@if (document != default)
+{
+    <div class="d-flex flex-column gap-3 justify-content-center @(string.IsNullOrEmpty(document.ThumbnailUri) ? "bg-body-tertiary" : "")" style="aspect-ratio: 4 / 1; background-image: url(@(document.ThumbnailUri ?? "error.svg")); background-size: cover;">
+        <div class="fs-1 fw-bolder text-center">@Title</div>
+        <div class="text-center">
+            @foreach (var item in document.Tags)
+            {
+                <div class="badge text-bg-secondary ms-1">
+                    @item
+                </div>
+            }
+        </div>
+    </div>
+}
+<div class="container">
+    <article>
+        @content
+    </article>
+</div>
+
+@code
+{
+    [Parameter]
+    public required string PostUri { get; init; }
+}
