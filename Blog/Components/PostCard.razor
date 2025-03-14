@@ -1,0 +1,14 @@
+<NavLink class="link-body-emphasis link-underline-opacity-0" href="@($"PostView/{PostUri}")">
+    <div class="ratio ratio-16x9">
+        <img class="img-thumbnail p-0" src="@(thumbnailUri ?? "error.svg")" alt="½æ³×ÀÏ" />
+    </div>
+    <div class="fw-bold text-truncate mt-3" title="@Path.GetFileNameWithoutExtension(PostUri)">
+        @Path.GetFileNameWithoutExtension(PostUri)
+    </div>
+</NavLink>
+
+@code
+{
+    [Parameter]
+    public required string PostUri { get; init; }
+}
