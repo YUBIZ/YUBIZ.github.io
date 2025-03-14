@@ -9,6 +9,6 @@ public partial class MainLayout(GitHubService gitHubService)
 
     protected override async Task OnInitializedAsync()
     {
-        DocsTree = await gitHubService.GetRawFromJsonAsync<FileTree>("YUBIZ", "Posts", "release", "DocsTree.json");
+        DocsTree = await gitHubService.GetRawFromJsonAsync<FileTree>("DocsTree.json");
     }
 }
