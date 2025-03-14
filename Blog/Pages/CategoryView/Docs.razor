@@ -1,0 +1,21 @@
+﻿@page "/CategoryView/Docs/{*CategoryUri}"
+
+<div class="d-flex flex-column container">
+    @if (SubDocsList != null)
+    {
+        <div class="flex-fill my-3 row row-cols-1 row-cols-sm-2 row-cols-lg-2 row-cols-xl-3 g-3">
+            @foreach (var item in SubDocsList)
+            {
+                <div class="col">
+                    <PostCard PostUri="@item" />
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code
+{
+    [Parameter]
+    public required string CategoryUri { get; init; }
+}
