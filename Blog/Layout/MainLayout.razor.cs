@@ -5,10 +5,10 @@ namespace Blog.Layout;
 
 public partial class MainLayout(GitHubService gitHubService)
 {
-    private FileTree DocsTree { get; set; }
+    private FileTree docsTree;
 
     protected override async Task OnInitializedAsync()
     {
-        DocsTree = await gitHubService.GetRawFromJsonAsync<FileTree>("DocsTree.json");
+        docsTree = await gitHubService.GetRawFromJsonAsync<FileTree>("DocsTree.json");
     }
 }
