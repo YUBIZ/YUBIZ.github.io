@@ -9,7 +9,7 @@ public class GitHubService
     public string? Ref { get; set; }
 
     private readonly HttpClient httpClient = new() { BaseAddress = new Uri("https://raw.githubusercontent.com") };
-        
+
     public async Task<HttpResponseMessage> GetRawAsync(string owner, string repo, string @ref, string path)
         => await httpClient.GetAsync($"{owner}/{repo}/{@ref}/{path}");
 
@@ -27,4 +27,10 @@ public class GitHubService
 
     public async Task<T?> GetRawFromJsonAsync<T>(string path)
         => await GetRawFromJsonAsync<T>(Owner!, Repo!, Ref!, path);
+
+    public async Task<T?> GetRawFromYamlFrontMatterAsync<T>(string owner, string repo, string @ref, string path)
+        => Helper.DeserializeYamlFrontMatter<T>(await GetRawStringAsync(owner, repo, @ref, path));
+
+    public async Task<T?> GetRawFromYamlFrontMatterAsync<T>(string path)
+        => await GetRawFromYamlFrontMatterAsync<T>(Owner!, Repo!, Ref!, path);
 }
