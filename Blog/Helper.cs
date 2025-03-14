@@ -5,7 +5,7 @@ namespace Blog;
 
 public static partial class Helper
 {
-    public static T? GetFromYamlFrontMatter<T>(string input)
+    public static T? DeserializeYamlFrontMatter<T>(string input)
     {
         Match result = YamlFrontMatterRegex().Match(input);
         return result.Success ? new Deserializer().Deserialize<T>(result.Groups[1].Value) : default;
