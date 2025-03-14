@@ -8,6 +8,8 @@ public class GitHubService
     public string? Repo { get; set; }
     public string? Ref { get; set; }
 
+    public static string RawBaseAdddress => "https://raw.githubusercontent.com";
+
     private readonly HttpClient httpClient = new() { BaseAddress = new Uri("https://raw.githubusercontent.com") };
 
     public async Task<HttpResponseMessage> GetRawAsync(string owner, string repo, string @ref, string path)
