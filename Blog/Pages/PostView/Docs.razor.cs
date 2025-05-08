@@ -1,4 +1,5 @@
-﻿using Blog.Models;
+﻿using Blog.Markdig;
+using Blog.Models;
 using Blog.Services;
 using Markdig;
 using Microsoft.AspNetCore.Components;
@@ -19,7 +20,7 @@ public partial class Docs(GitHubService gitHubService)
 
         document = Helper.DeserializeYamlFrontMatter<Document>(raw);
 
-        MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().Build();
+        MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().Use(new GitHubExtension(gitHubService)).Build();
         content = (MarkupString)Markdown.ToHtml(raw, markdownPipeline);
     }
 }
