@@ -11,8 +11,15 @@ public partial class PostCard(GitHubService gitHubService)
     {
         Document document = await gitHubService.GetRawFromYamlFrontMatterAsync<Document>(PostUri);
 
-        thumbnailUri = !string.IsNullOrEmpty(document.ThumbnailUri) && document.ThumbnailUri.StartsWith('/')
-            ? gitHubService.RawBaseAdddressWithParams + document.ThumbnailUri
-            : document.ThumbnailUri;
+        thumbnailUri = document.ThumbnailUri;
+
+        if (string.IsNullOrEmpty(thumbnailUri))
+        {
+            thumbnailUri = "error.svg";
+        }
+        else if (thumbnailUri.StartsWith('/'))
+        {
+            thumbnailUri = gitHubService.RawBaseAdddressWithParams + thumbnailUri;
+        }
     }
 }
