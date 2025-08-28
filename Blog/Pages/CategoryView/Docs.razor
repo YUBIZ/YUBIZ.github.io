@@ -1,17 +1,29 @@
 ﻿@page "/CategoryView/Docs/{*CategoryUri}"
 
-<div class="d-flex flex-column container">
-    @if (SubDocsList != null)
-    {
-        <div class="flex-fill my-3 row row-cols-1 row-cols-sm-2 row-cols-lg-2 row-cols-xl-3 g-3">
-            @foreach (var item in SubDocsList)
+<div class="container">
+    <div class="mt-2 row g-5">
+        <div class="col-lg-9">
+            @if (SubDocsList?.Count() > 0)
             {
-                <div class="col">
-                    <PostCard PostUri="@item" />
-                </div>
+                @foreach (var item in SubDocsList)
+                {
+                    <PostCard PostUri=@item />
+                }
             }
         </div>
-    }
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="sticky-top top" style="top: 1rem; ">
+                <div class="d-flex flex-row rounded bg-black justify-content-center p-2 mb-2">
+                    <NavLink class="nav-link" href="https://github.com/YUBIZ" Match="NavLinkMatch.All">
+                        <i class="bi bi-github" />
+                    </NavLink>
+                </div>
+                <div class="bg-body-secondary rounded p-1">
+                    <DirectoryTreeView Tree=@docsTree BaseUri="CategoryView" />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @code
