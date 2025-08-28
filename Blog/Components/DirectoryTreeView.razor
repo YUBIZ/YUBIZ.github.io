@@ -1,0 +1,28 @@
+﻿@if (Tree == default) return;
+
+<ul>
+    <li>
+        <NavLink class="link-body-emphasis link-underline-opacity-0" href="@($"{BaseUri}/{Tree.Name}")">
+            @Tree.Name
+        </NavLink>
+
+        @if (Tree.SubTrees.Any())
+        {
+            <div class="ms-3 ps-2 border-start">
+                @foreach (var subTree in Tree.SubTrees)
+                {
+                    <DirectoryTreeView Tree=@subTree BaseUri=@($"{BaseUri}/{Tree.Name}") />
+                }
+            </div>
+        }
+    </li>
+</ul>
+
+@code
+{
+    [Parameter]
+    public required FileTree Tree { get; init; }
+
+    [Parameter]
+    public required string BaseUri { get; init; }
+}
