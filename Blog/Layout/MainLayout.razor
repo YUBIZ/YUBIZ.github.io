@@ -1,7 +1,11 @@
 ﻿@inherits LayoutComponentBase
 
-<main>
-    @Body
-</main>
-<TopButton />
-<Footer />
+<div class="d-flex flex-column min-vh-100">
+    <Navbar />
+
+    <main class="flex-grow-1">@Body</main>
+
+    <GoToTopButton />
+
+    <Footer />
+</div>
