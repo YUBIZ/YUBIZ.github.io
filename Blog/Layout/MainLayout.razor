@@ -1,42 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="d-flex position-fixed dvw-100 dvh-100 shadow">
-    <!--사이드바-->
-    <div class="sidebar bg-body-tertiary d-flex flex-column px-3 mobile-sidebar @(isSidebarOpen ? "show" : "")" style="width: 15rem">
-        <!-- 프로필 이미지 -->
-        <img src="https://github.com/YUBIZ.png" class="rounded-pill mx-5 m-3">
-        <!-- 네비게이션 메뉴 -->
-        <nav class="nav bg-body-secondary rounded-pill justify-content-center shadow">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <i class="bi bi-house-door-fill" />
-            </NavLink>
-            <NavLink class="nav-link" href="https://github.com/YUBIZ" Match="NavLinkMatch.All">
-                <i class="bi bi-github" />
-            </NavLink>
-        </nav>
-        <hr />
-        <div class="flex-fill overflow-y-scroll bg-body-secondary rounded shadow p-2" style="scrollbar-width: none;">
-            @if (docsTree != default)
-            {
-                <FileTreeView FileTree="docsTree" BaseUri="CategoryView" />
-                <hr />
-            }
-        </div>
-        <hr />
-    </div>
-
-    <!-- 메인 콘텐츠 영역 -->
-    <div class="flex-fill d-flex flex-column overflow-y-auto">
-        <main class="flex-fill">
-            @Body
-        </main>
-        <footer class="bg-body-tertiary text-center p-3">
-            모든 게시물은 CC BY-SA 4.0로 보호됩니다. © 2025 YUBIZ
-        </footer>
-    </div>
-</div>
-
-<!-- 모바일 토글 버튼 -->
-<button class="btn btn-primary rounded-circle mobile-toggle-btn" @onclick="() => { isSidebarOpen = !isSidebarOpen; }">
-    <i class="bi bi-list"></i>
-</button>
+<main>
+    @Body
+</main>
+<TopButton />
+<Footer />
