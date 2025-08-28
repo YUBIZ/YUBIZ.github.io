@@ -8,7 +8,7 @@
 
         @if (Tree.SubTrees.Any())
         {
-            <div class="ms-3 ps-2 border-start">
+            <div class="ms-2 ps-2 border-start">
                 @foreach (var subTree in Tree.SubTrees)
                 {
                     <DirectoryTreeView Tree=@subTree BaseUri=@($"{BaseUri}/{Tree.Name}") />
