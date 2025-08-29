@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Blog.Pages.PostView;
 
-public partial class Docs(GitHubService gitHubService)
+public partial class Document(GitHubService gitHubService)
 {
     private DocumentMetadata documentMetadata;
 
