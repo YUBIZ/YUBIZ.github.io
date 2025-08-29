@@ -14,7 +14,6 @@ public partial class DocumentCard(GitHubService gitHubService)
 
     private string GetThumbnailUri()
     {
-        if(documentMetadata.ThumbnailUri == null) return "images/default.svg";
         return (documentMetadata.ThumbnailUri.StartsWith('/') ? gitHubService.RawBaseAdddressWithParams : "") + documentMetadata.ThumbnailUri;
     }
 }
