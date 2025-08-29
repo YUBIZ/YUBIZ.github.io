@@ -1,0 +1,32 @@
+﻿@if (documentMetadata == default) return;
+
+<NavLink class="text-decoration-none text-body" href="@($"PostView/{DocumentUri}")">
+    <div class="row mb-lg-2">
+        <!-- 썸네일 영역 -->
+        <div class="col-lg-4 mb-2 mb-lg-0">
+            @if (documentMetadata.ThumbnailUri == null)
+            {
+                <DefaultImage />
+            }
+            else
+            {
+                <div class="ratio ratio-16x9">
+                    <img class="img-fluid" src="@GetThumbnailUri()" alt="썸네일" />
+                </div>
+            }
+        </div>
+        <div class="col-lg-8 mb-2 mb-lg-0">
+            <!-- 제목 영역 -->
+            <h5 class="fs-2 text-truncate " title="@documentMetadata.Title">
+                @documentMetadata.Title
+            </h5>
+        </div>
+    </div>
+</NavLink>
+
+<TagListView Tags="@documentMetadata.Tags" />
+
+@code {
+    [Parameter]
+    public required string DocumentUri { get; init; }
+}
