@@ -1,27 +1,21 @@
-﻿@page "/PostView/Docs/{*DocumentPostUri}"
+﻿@page "/PostView/{*DocumentUri}"
 
 @if (documentMetadata == default) return;
 
 <PageTitle>@documentMetadata.Title</PageTitle>
 
-<!--제목 및 썸네일-->
-<div class="d-flex flex-column gap-3 justify-content-center @(string.IsNullOrEmpty(documentMetadata.ThumbnailUri) ? "bg-body-tertiary" : "")" style="aspect-ratio: 4 / 1; background-image: url(@(documentMetadata.ThumbnailUri ?? "error.svg")); background-size: cover;">
-    <div class="fs-1 fw-bolder text-center">@documentMetadata.Title</div>
-    <div class="text-center">
-        @foreach (var item in documentMetadata.Tags)
-        {
-            <div class="badge text-bg-secondary ms-1">
-                @item
-            </div>
-        }
-    </div>
+<div class="fs-1 fw-bolder text-center">@documentMetadata.Title</div>
+<div class="container">
+    <article>
+        @documentContent
+    </article>
+
+    <TagListView Tags="@documentMetadata.Tags" />
+
 </div>
-<article class="container">
-    @documentContent
-</article>
 
 @code
 {
     [Parameter]
-    public required string DocumentPostUri { get; init; }
+    public required string DocumentUri { get; init; }
 }

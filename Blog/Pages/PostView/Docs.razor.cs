@@ -14,7 +14,7 @@ public partial class Docs(GitHubService gitHubService)
 
     protected override async Task OnParametersSetAsync()
     {
-        var raw = await gitHubService.GetRawStringAsync($"Docs/{DocumentPostUri}");
+        var raw = await gitHubService.GetRawStringAsync(DocumentUri);
 
         documentMetadata = Helper.DeserializeYamlFrontMatter<DocumentMetadata>(raw);
 

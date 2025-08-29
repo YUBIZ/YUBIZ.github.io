@@ -1,27 +1,27 @@
-﻿@page "/CategoryView/Docs/{*CategoryUri}"
+﻿@page "/CategoryView/{*DocumentCategoryUri}"
+
+@if (docsTree == default) return;
 
 <div class="container">
     <div class="mt-2 row">
-        <div class="col-lg-9">
-            @if (SubDocsList?.Count() > 0)
-            {
-                @foreach (var item in SubDocsList)
-                {
-                    <PostCard PostUri=@item />
-                }
-            }
-        </div>
-        <div class="col-lg-3 d-none d-lg-block">
-            <div class="sticky-top top" style="top: 1rem; ">
-                <div class="d-flex flex-row rounded bg-black justify-content-center p-2 mb-2">
+        <div class="col-lg-3 mb-2 order-lg-1">
+            <div class="sticky-top" style="top: 1rem;">
+                <div class="d-flex flex-row rounded bg-black justify-content-center p-2 mb-2 shadow">
                     <NavLink class="nav-link" href="https://github.com/YUBIZ" Match="NavLinkMatch.All">
-                        <i class="bi bi-github" />
+                        <i class="bi bi-github fs-5" />
                     </NavLink>
                 </div>
-                <div class="bg-body-secondary rounded p-1">
+                <div class="bg-body-secondary rounded p-1 shadow">
                     <DirectoryTreeView Tree=@docsTree BaseUri="CategoryView" />
                 </div>
             </div>
+        </div>
+        <div class="col-lg-9 order-lg-0">
+            @foreach (var item in DocsList)
+            {
+                <DocumentCard DocumentUri=@item />
+                <hr />
+            }
         </div>
     </div>
 </div>
@@ -29,5 +29,5 @@
 @code
 {
     [Parameter]
-    public required string CategoryUri { get; init; }
+    public required string DocumentCategoryUri { get; init; }
 }

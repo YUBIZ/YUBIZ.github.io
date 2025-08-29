@@ -5,14 +5,12 @@ namespace Blog.Pages.CategoryView;
 
 public partial class Docs(GitHubService gitHubService)
 {
-    private string[]? docsList;
     private FileTree docsTree;
 
-    private string[]? SubDocsList => docsList?.Where(v => v.StartsWith($"Docs/{CategoryUri}")).ToArray();
+    private IEnumerable<string> DocsList => docsTree.EnumerateFiles().Where(v => v.StartsWith(DocumentCategoryUri));
 
     protected override async Task OnInitializedAsync()
     {
         docsTree = await gitHubService.GetRawFromJsonAsync<FileTree>("DocsTree.json");
-        docsList = await gitHubService.GetRawFromJsonAsync<string[]>("DocsList.json");
     }
 }
