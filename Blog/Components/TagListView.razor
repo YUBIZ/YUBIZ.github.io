@@ -1,0 +1,15 @@
+﻿<div class="d-flex gap-1 flex-wrap">
+    @foreach (var item in Tags)
+    {
+        <span class="badge text-bg-primary">
+            <i class="bi bi-tag-fill" />
+            @item
+        </span>
+    }
+</div>
+
+@code
+{
+    [Parameter]
+    public required IEnumerable<string> Tags { get; init; }
+}
