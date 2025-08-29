@@ -8,19 +8,17 @@ namespace Blog.Pages.PostView;
 
 public partial class Docs(GitHubService gitHubService)
 {
-    private string Title => Path.GetFileNameWithoutExtension(PostUri);
+    private DocumentMetadata documentMetadata;
 
-    private Document document;
-
-    private MarkupString content;
+    private MarkupString documentContent;
 
     protected override async Task OnParametersSetAsync()
     {
-        var raw = await gitHubService.GetRawStringAsync($"Docs/{PostUri}");
+        var raw = await gitHubService.GetRawStringAsync($"Docs/{DocumentPostUri}");
 
-        document = Helper.DeserializeYamlFrontMatter<Document>(raw);
+        documentMetadata = Helper.DeserializeYamlFrontMatter<DocumentMetadata>(raw);
 
         MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().Use(new GitHubExtension(gitHubService)).Build();
-        content = (MarkupString)Markdown.ToHtml(raw, markdownPipeline);
+        documentContent = (MarkupString)Markdown.ToHtml(raw, markdownPipeline);
     }
 }
