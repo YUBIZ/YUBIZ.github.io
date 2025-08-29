@@ -1,6 +1,6 @@
 ﻿@page "/CategoryView/{*DocumentCategoryUri}"
 
-@if (docsTree == default) return;
+@if (documentFileTree == default) return;
 
 <div class="container">
     <div class="mt-2 row">
@@ -12,15 +12,18 @@
                     </NavLink>
                 </div>
                 <div class="bg-body-secondary rounded p-1 shadow">
-                    <DirectoryTreeView Tree=@docsTree BaseUri="CategoryView" />
+                    <DirectoryTreeView Tree=@documentFileTree BaseUri="CategoryView" />
                 </div>
             </div>
         </div>
         <div class="col-lg-9 order-lg-0">
-            @foreach (var item in DocsList)
+            @if (documentFilePathWithCommitHistoryCollection != null)
             {
-                <DocumentCard DocumentUri=@item />
-                <hr />
+                @foreach (var item in documentFilePathWithCommitHistoryCollection.Where(v => v.FilePath.StartsWith(DocumentCategoryUri)))
+                {
+                    <DocumentCard DocumentUri=@item.FilePath />
+                    <hr />
+                }
             }
         </div>
     </div>
