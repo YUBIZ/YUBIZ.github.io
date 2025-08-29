@@ -11,6 +11,6 @@ public partial class Docs(GitHubService gitHubService)
 
     protected override async Task OnInitializedAsync()
     {
-        docsTree = await gitHubService.GetRawFromJsonAsync<FileTree>("DocsTree.json");
+        docsTree = await gitHubService.GetRawFromJsonAsync<FileTree>("DocumentFileTree.json");
     }
 }
