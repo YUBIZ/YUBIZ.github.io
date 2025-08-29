@@ -1,0 +1,1 @@
+﻿global using FileTree = Blog.Models.Tree<Blog.Models.DirectoryFiles>;
