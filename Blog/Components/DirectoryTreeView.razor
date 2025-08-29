@@ -2,8 +2,8 @@
 
 <ul class="list-unstyled">
     <li>
-        <NavLink class="text-decoration-none text-body" href="@($"{BaseUri}/{Tree.Name}")">
-            @Tree.Name
+        <NavLink class="text-decoration-none text-body" href="@($"{BaseUri}/{Tree.Value.Directory}")">
+            @Tree.Value.Directory
         </NavLink>
 
         @if (Tree.SubTrees.Any())
@@ -11,7 +11,7 @@
             <div class="ms-2 ps-2 border-start">
                 @foreach (var subTree in Tree.SubTrees)
                 {
-                    <DirectoryTreeView Tree=@subTree BaseUri=@($"{BaseUri}/{Tree.Name}") />
+                    <DirectoryTreeView Tree=@subTree BaseUri=@($"{BaseUri}/{Tree.Value.Directory}") />
                 }
             </div>
         }
