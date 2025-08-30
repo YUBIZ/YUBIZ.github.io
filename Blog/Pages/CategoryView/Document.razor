@@ -1,4 +1,4 @@
-﻿@page "/CategoryView/{*DocumentCategoryUri}"
+﻿@page "/CategoryView/Document"
 
 @if (documentFileTree == default) return;
 
@@ -12,14 +12,20 @@
                     </NavLink>
                 </div>
                 <div class="bg-body-secondary rounded p-1 shadow">
-                    <DirectoryTreeView Tree=@documentFileTree BaseUri="CategoryView" />
+                    <FileTreeView FileTree="@documentFileTree" />
                 </div>
             </div>
         </div>
         <div class="col-lg-9 order-lg-0">
-            @if (documentFilePathWithCommitHistoryCollection != null)
+
+            <div class="btn-group mb-2 gap-2">
+                <Dropdown Items="Enum.GetValues<OrderType>()" @bind-SelectedItem="CurrentOrderType" />
+                <Dropdown Items="Enum.GetValues<OrderDirection>()" @bind-SelectedItem="CurrentOrderDirection" />
+            </div>
+
+            @if (filteredAndOrderedDocumentFilePathAndCommitHistoryCollection != null)
             {
-                @foreach (var item in documentFilePathWithCommitHistoryCollection.Where(v => v.FilePath.StartsWith(DocumentCategoryUri)))
+                @foreach (var item in filteredAndOrderedDocumentFilePathAndCommitHistoryCollection)
                 {
                     <DocumentCard DocumentUri=@item.FilePath />
                     <hr />
@@ -28,9 +34,3 @@
         </div>
     </div>
 </div>
-
-@code
-{
-    [Parameter]
-    public required string DocumentCategoryUri { get; init; }
-}
