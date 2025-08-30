@@ -11,16 +11,16 @@
                         <i class="bi bi-github fs-5" />
                     </NavLink>
                 </div>
-                <div class="bg-body-secondary rounded p-1 shadow">
-                    <FileTreeView FileTree="documentFileTree" />
+                <div class="bg-body-secondary rounded p-2 shadow">
+                    <FileTreeView FileTree="@documentFileTree" HideFiles="@true" @bind-SelectedName="@DocumentCategory" />
                 </div>
             </div>
         </div>
         <div class="col-lg-9 order-lg-0">
 
             <div class="btn-group mb-2 gap-2">
-                <Dropdown Items="Enum.GetValues<OrderType>()" @bind-SelectedItem="CurrentOrderType" />
-                <Dropdown Items="Enum.GetValues<OrderDirection>()" @bind-SelectedItem="CurrentOrderDirection" />
+                <Dropdown Items="Enum.GetValues<OrderType>()" @bind-SelectedItem="@CurrentOrderType" />
+                <Dropdown Items="Enum.GetValues<OrderDirection>()" @bind-SelectedItem="@CurrentOrderDirection" />
             </div>
 
             <Virtualize Items="@filteredAndOrderedDocumentFilePathAndCommitHistoryCollection" Context="item">
