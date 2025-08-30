@@ -2,24 +2,27 @@
 
 <ul class="list-unstyled">
     <li>
-        @FileTree.Value.DirectoryName
+        <button class="btn p-0" @onclick="@(async () => await OnNameSelectedAsync(CurrentDirectoryPath))">
+            @FileTree.Value.DirectoryName
+        </button>
 
         @if (FileTree.SubTrees.Any())
         {
             <div class="ms-2 ps-2 border-start">
-                @foreach (var subTree in FileTree.SubTrees)
-                {
-                    <FileTreeView FileTree="@subTree" />
-                }
+                <Virtualize Items="@FileTree.SubTrees" Context="item">
+                    <FileTreeView @key="@item" FileTree="@item" HideFiles="@HideFiles" ParentPath="@CurrentDirectoryPath" SelectedName="@SelectedName" SelectedNameChanged="@OnNameSelectedAsync" />
+                </Virtualize>
             </div>
-            <ul>
-                @foreach (var item in FileTree.Value.FileNames)
-                {
-                    <li>
+        }
+        @if (!HideFiles)
+        {
+            <div class="ms-2 ps-2 border-start">
+                <Virtualize Items="@FileTree.Value.FileNames" Context="item">
+                    <button @key="@item" class="btn p-0" @onclick="@(async () => await OnNameSelectedAsync(Path.Combine(CurrentDirectoryPath, item)))">
                         @item
-                    </li>
-                }
-            </ul>
+                    </button>
+                </Virtualize>
+            </div>
         }
     </li>
 </ul>
@@ -29,4 +32,15 @@
     [Parameter, EditorRequired]
     public required FileTree FileTree { get; init; }
 
+    [Parameter]
+    public required bool HideFiles { get; init; }
+
+    [Parameter]
+    public string ParentPath { get; init; } = string.Empty;
+
+    [Parameter]
+    public string? SelectedName { get; set; }
+
+    [Parameter]
+    public EventCallback<string> SelectedNameChanged { get; init; }
 }
