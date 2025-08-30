@@ -12,7 +12,7 @@
                     </NavLink>
                 </div>
                 <div class="bg-body-secondary rounded p-1 shadow">
-                    <FileTreeView FileTree="@documentFileTree" />
+                    <FileTreeView FileTree="documentFileTree" />
                 </div>
             </div>
         </div>
@@ -23,14 +23,10 @@
                 <Dropdown Items="Enum.GetValues<OrderDirection>()" @bind-SelectedItem="CurrentOrderDirection" />
             </div>
 
-            @if (filteredAndOrderedDocumentFilePathAndCommitHistoryCollection != null)
-            {
-                @foreach (var item in filteredAndOrderedDocumentFilePathAndCommitHistoryCollection)
-                {
-                    <DocumentCard DocumentUri=@item.FilePath />
-                    <hr />
-                }
-            }
+            <Virtualize Items="@filteredAndOrderedDocumentFilePathAndCommitHistoryCollection" Context="item">
+                <DocumentCard @key="@item.FilePath" DocumentUri="@item.FilePath" />
+                <hr />
+            </Virtualize>
         </div>
     </div>
 </div>

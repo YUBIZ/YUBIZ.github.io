@@ -67,20 +67,21 @@ public partial class Document(GitHubService gitHubService)
     {
         var collection = documentFilePathAndCommitHistoryCollection?.Where(v => v.FilePath.StartsWith(DocumentCategory));
 
+        Func<FilePathAndCommitHistory, string> orderTitleFunc = v => v.FilePath;
+
         Func<FilePathAndCommitHistory, object> orderFunc = CurrentOrderType switch
         {
-            OrderType.CreateTime => (v => v.CommitHistory.FirstOrDefault().Date),
-            OrderType.LastUpdateTime => (v => v.CommitHistory.LastOrDefault().Date),
+            OrderType.CreateTime => (v => v.CommitHistory.LastOrDefault().Date),
+            OrderType.LastUpdateTime => (v => v.CommitHistory.FirstOrDefault().Date),
             _ => throw new NotImplementedException()
         };
 
         collection = CurrentOrderDirection switch
         {
-            OrderDirection.Ascending => collection?.OrderBy(orderFunc),
-            OrderDirection.Descending => collection?.OrderByDescending(orderFunc),
+            OrderDirection.Ascending => collection?.OrderBy(orderFunc).ThenBy(orderTitleFunc),
+            OrderDirection.Descending => collection?.OrderByDescending(orderFunc).ThenByDescending(orderTitleFunc),
             _ => throw new NotImplementedException()
         };
-
 
         filteredAndOrderedDocumentFilePathAndCommitHistoryCollection = collection?.ToArray();
     }
