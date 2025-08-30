@@ -1,20 +1,19 @@
 ﻿@typeparam T
 
 <div class="dropdown shadow">
-    <button class="btn btn-secondary dropdown-toggle show" data-bs-toggle="dropdown">
+    <button type="button" class="btn btn-secondary dropdown-toggle border border-0" data-bs-toggle="dropdown">
         @if (SelectedItem != null)
         {
-            @(SelectedItemTemplate == null ? SelectedItem.ToString() : SelectedItemTemplate(SelectedItem))
+            @SelectedItem
         }
     </button>
-    <ul class="dropdown-menu">
-        @foreach (var item in Items)
-        {
-            <li class="dropdown-item" @onclick="@(async () => await OnItemSelectedAsync(item))">
-                @(ItemTemplate == null ? item?.ToString() : ItemTemplate(item))
-            </li>
-        }
-    </ul>
+    <div class="dropdown-menu">
+        <Virtualize Items="@Items.ToArray()" Context="item">
+            <button type="button" class="dropdown-item" @key="@item" @onclick="@(async () => await OnItemSelectedAsync(item))">
+                @item
+            </button>
+        </Virtualize>
+    </div>
 </div>
 
 @code
@@ -27,11 +26,5 @@
 
     [Parameter]
     public EventCallback<T> SelectedItemChanged { get; init; }
-
-    [Parameter]
-    public RenderFragment<T>? SelectedItemTemplate { get; init; }
-
-    [Parameter]
-    public RenderFragment<T>? ItemTemplate { get; init; }
 
 }
