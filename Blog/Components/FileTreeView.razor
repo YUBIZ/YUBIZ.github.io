@@ -1,0 +1,32 @@
+﻿@if (FileTree == default) return;
+
+<ul class="list-unstyled">
+    <li>
+        @FileTree.Value.DirectoryName
+
+        @if (FileTree.SubTrees.Any())
+        {
+            <div class="ms-2 ps-2 border-start">
+                @foreach (var subTree in FileTree.SubTrees)
+                {
+                    <FileTreeView FileTree="@subTree" />
+                }
+            </div>
+            <ul>
+                @foreach (var item in FileTree.Value.FileNames)
+                {
+                    <li>
+                        @item
+                    </li>
+                }
+            </ul>
+        }
+    </li>
+</ul>
+
+@code
+{
+    [Parameter, EditorRequired]
+    public required FileTree FileTree { get; init; }
+
+}
