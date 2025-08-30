@@ -1,31 +1,29 @@
 ﻿@if (FileTree == default) return;
 
-<ul class="list-unstyled">
-    <li>
-        <button class="btn p-0" @onclick="@(async () => await OnNameSelectedAsync(CurrentDirectoryPath))">
-            @FileTree.Value.DirectoryName
-        </button>
+<div>
+    <button class="btn p-0" @onclick="@(async () => await OnNameSelectedAsync(CurrentDirectoryPath))">
+        @FileTree.Value.DirectoryName
+    </button>
 
-        @if (FileTree.SubTrees.Any())
-        {
-            <div class="ms-2 ps-2 border-start">
-                <Virtualize Items="@FileTree.SubTrees" Context="item">
-                    <FileTreeView @key="@item" FileTree="@item" HideFiles="@HideFiles" ParentPath="@CurrentDirectoryPath" SelectedName="@SelectedName" SelectedNameChanged="@OnNameSelectedAsync" />
-                </Virtualize>
-            </div>
-        }
-        @if (!HideFiles)
-        {
-            <div class="ms-2 ps-2 border-start">
-                <Virtualize Items="@FileTree.Value.FileNames" Context="item">
-                    <button @key="@item" class="btn p-0" @onclick="@(async () => await OnNameSelectedAsync(Path.Combine(CurrentDirectoryPath, item)))">
-                        @item
-                    </button>
-                </Virtualize>
-            </div>
-        }
-    </li>
-</ul>
+    @if (FileTree.SubTrees.Any())
+    {
+        <div class="ms-2 ps-2 border-start">
+            <Virtualize Items="@FileTree.SubTrees" Context="item">
+                <FileTreeView @key="@item" FileTree="@item" HideFiles="@HideFiles" ParentPath="@CurrentDirectoryPath" SelectedName="@SelectedName" SelectedNameChanged="@OnNameSelectedAsync" />
+            </Virtualize>
+        </div>
+    }
+    @if (!HideFiles)
+    {
+        <div class="ms-2 ps-2 border-start">
+            <Virtualize Items="@FileTree.Value.FileNames" Context="item">
+                <button @key="@item" class="btn p-0" @onclick="@(async () => await OnNameSelectedAsync(Path.Combine(CurrentDirectoryPath, item)))">
+                    @item
+                </button>
+            </Virtualize>
+        </div>
+    }
+</div>
 
 @code
 {
