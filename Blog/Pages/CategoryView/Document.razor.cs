@@ -1,23 +1,12 @@
-﻿using Blog.Models;
+﻿using Blog.Misc;
+using Blog.Models;
 using Blog.Services;
 
 namespace Blog.Pages.CategoryView;
 
-enum OrderType
-{
-    CreateTime,
-    LastUpdateTime,
-}
-
-enum OrderDirection
-{
-    Ascending,
-    Descending
-}
-
 public partial class Document(GitHubService gitHubService)
 {
-    private OrderType _currentOrderType;
+    private OrderType _currentOrderType = OrderType.CreateTime;
     private OrderType CurrentOrderType
     {
         get => _currentOrderType;
@@ -28,7 +17,7 @@ public partial class Document(GitHubService gitHubService)
         }
     }
 
-    private OrderDirection _currentOrderDirection;
+    private OrderDirection _currentOrderDirection = OrderDirection.Descending;
     private OrderDirection CurrentOrderDirection
     {
         get => _currentOrderDirection;
@@ -71,8 +60,8 @@ public partial class Document(GitHubService gitHubService)
 
         Func<FilePathAndCommitHistory, object> orderFunc = CurrentOrderType switch
         {
-            OrderType.CreateTime => (v => v.CommitHistory.LastOrDefault().Date),
-            OrderType.LastUpdateTime => (v => v.CommitHistory.FirstOrDefault().Date),
+            OrderType.CreateTime => (v => v.CommitHistory.Min(v1 => v1.Date)),
+            OrderType.LastUpdateTime => (v => v.CommitHistory.Max(v1 => v1.Date)),
             _ => throw new NotImplementedException()
         };
 
