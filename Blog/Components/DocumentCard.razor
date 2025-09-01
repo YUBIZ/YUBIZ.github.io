@@ -1,6 +1,6 @@
 ﻿@if (documentMetadata == default) return;
 
-<NavLink class="text-decoration-none text-body" href="@($"PostView/{DocumentUri}")">
+<NavLink class="text-decoration-none text-body" href="@($"PostView/Document?document-uri={DocumentUri}")">
     <div class="row mb-lg-2">
         <!-- 썸네일 영역 -->
         <div class="col-lg-4 mb-2 mb-lg-0">

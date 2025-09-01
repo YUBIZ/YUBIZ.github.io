@@ -1,4 +1,4 @@
-﻿@page "/PostView/{*DocumentUri}"
+﻿@page "/PostView/Document"
 
 @if (documentMetadata == default) return;
 
@@ -16,6 +16,6 @@
 
 @code
 {
-    [Parameter]
+    [Parameter, SupplyParameterFromQuery(Name = "document-uri")]
     public required string DocumentUri { get; init; }
 }
