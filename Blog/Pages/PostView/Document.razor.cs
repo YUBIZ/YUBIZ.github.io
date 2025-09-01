@@ -1,4 +1,5 @@
-﻿using Blog.Markdig;
+﻿using Blog.Helpers;
+using Blog.Markdig;
 using Blog.Models;
 using Blog.Services;
 using Markdig;
@@ -16,7 +17,7 @@ public partial class Document(GitHubService gitHubService)
     {
         var raw = await gitHubService.GetRawStringAsync(DocumentUri);
 
-        documentMetadata = Helper.DeserializeYamlFrontMatter<DocumentMetadata>(raw);
+        documentMetadata = YamlHelper.DeserializeYamlFrontMatter<DocumentMetadata>(raw);
 
         MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().Use(new GitHubExtension(gitHubService)).Build();
         documentContent = (MarkupString)Markdown.ToHtml(raw, markdownPipeline);
