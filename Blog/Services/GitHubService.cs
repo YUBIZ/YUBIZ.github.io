@@ -1,27 +1,23 @@
-﻿using System.Net.Http.Json;
+﻿using Blog.Misc.HttpClientExtensions;
+using Blog.Models.Config;
+using System.Net.Http.Json;
 
 namespace Blog.Services;
 
-public class GitHubService
+public class GitHubService(HttpClient httpClient, GitHubSettings gitHubSettings)
 {
-    public static string RawBaseAdddress => "https://raw.githubusercontent.com";
-    public required string Owner { get; init; }
-    public required string Repo { get; init; }
-    public required string Ref { get; init; }
-    public string Params => $"{Owner}/{Repo}/{Ref}";
-    public string RawBaseAdddressWithParams => $"{RawBaseAdddress}/{Params}";
-
-    private readonly HttpClient httpClient = new() { BaseAddress = new Uri(RawBaseAdddress) };
+    public const string RawBaseAdddress = "https://raw.githubusercontent.com";
+    public string RawBaseAdddressWithParams { get; } = $"{RawBaseAdddress}/{gitHubSettings.Owner}/{gitHubSettings.Repo}/{gitHubSettings.Ref}";
 
     public async Task<HttpResponseMessage> GetRawAsync(string path)
-        => await httpClient.GetAsync($"{Params}/{path}");
+        => await httpClient.GetAsync($"{RawBaseAdddressWithParams}/{path}");
 
     public async Task<string> GetRawStringAsync(string path)
-        => await httpClient.GetStringAsync($"{Params}/{path}");
+        => await httpClient.GetStringAsync($"{RawBaseAdddressWithParams}/{path}");
 
     public async Task<T?> GetRawFromJsonAsync<T>(string path)
-        => await httpClient.GetFromJsonAsync<T>($"{Params}/{path}");
+        => await httpClient.GetFromJsonAsync<T>($"{RawBaseAdddressWithParams}/{path}");
 
     public async Task<T?> GetRawFromYamlFrontMatterAsync<T>(string path)
-        => Helper.DeserializeYamlFrontMatter<T>(await GetRawStringAsync(path));
+        => await httpClient.GetFromYamlFrontMatterAsync<T>($"{RawBaseAdddressWithParams}/{path}");
 }
