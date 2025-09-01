@@ -41,20 +41,20 @@ public partial class Document(GitHubService gitHubService)
 
     private FileTree documentFileTree;
 
-    private FilePathAndCommitHistory[]? documentFilePathAndCommitHistoryCollection;
+    private FilePathAndCommitHistory[] documentFilePathAndCommitHistoryCollection = [];
 
-    private FilePathAndCommitHistory[]? filteredAndOrderedDocumentFilePathAndCommitHistoryCollection;
+    private FilePathAndCommitHistory[] filteredAndOrderedDocumentFilePathAndCommitHistoryCollection = [];
 
     protected override async Task OnInitializedAsync()
     {
-        documentFileTree = await gitHubService.GetRawFromJsonAsync<FileTree>("DocumentFileTree.json");
-        documentFilePathAndCommitHistoryCollection = await gitHubService.GetRawFromJsonAsync<FilePathAndCommitHistory[]>("DocumentFilePathAndCommitHistoryCollection.json");
+        documentFileTree = await gitHubService.GetDocumentFileTreeAsync();
+        documentFilePathAndCommitHistoryCollection = await gitHubService.GetDocumentFilePathAndCommitHistoryCollectionAsync();
         FilterAndOrderCollection();
     }
 
     private void FilterAndOrderCollection()
     {
-        var collection = documentFilePathAndCommitHistoryCollection?.Where(v => v.FilePath.StartsWith(DocumentCategory));
+        var collection = documentFilePathAndCommitHistoryCollection.Where(v => v.FilePath.StartsWith(DocumentCategory));
 
         Func<FilePathAndCommitHistory, string> orderTitleFunc = v => v.FilePath;
 
@@ -67,11 +67,11 @@ public partial class Document(GitHubService gitHubService)
 
         collection = CurrentOrderDirection switch
         {
-            OrderDirection.Ascending => collection?.OrderBy(orderFunc).ThenBy(orderTitleFunc),
-            OrderDirection.Descending => collection?.OrderByDescending(orderFunc).ThenByDescending(orderTitleFunc),
+            OrderDirection.Ascending => collection.OrderBy(orderFunc).ThenBy(orderTitleFunc),
+            OrderDirection.Descending => collection.OrderByDescending(orderFunc).ThenByDescending(orderTitleFunc),
             _ => throw new NotImplementedException()
         };
 
-        filteredAndOrderedDocumentFilePathAndCommitHistoryCollection = collection?.ToArray();
+        filteredAndOrderedDocumentFilePathAndCommitHistoryCollection = collection.ToArray();
     }
 }
