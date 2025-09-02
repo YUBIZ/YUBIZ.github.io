@@ -1,19 +1,14 @@
-﻿using Blog.Models;
-using Blog.Services;
+﻿using Blog.Misc.HttpClientExtensions;
+using Blog.Models;
 
 namespace Blog.Components;
 
-public partial class DocumentCard(GitHubService gitHubService)
+public partial class DocumentCard(HttpClient httpClient)
 {
     private DocumentMetadata documentMetadata;
 
     protected override async Task OnInitializedAsync()
     {
-        documentMetadata = await gitHubService.GetRawFromYamlFrontMatterAsync<DocumentMetadata>(DocumentUri);
-    }
-
-    private string GetThumbnailUri()
-    {
-        return (documentMetadata.ThumbnailUri.StartsWith('/') ? gitHubService.RawBaseAdddressWithParams : "") + documentMetadata.ThumbnailUri;
+        documentMetadata = await httpClient.GetFromYamlFrontMatterAsync<DocumentMetadata>(DocumentUri);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Blog.Misc;
 using Blog.Models;
-using Blog.Services;
+using Blog.Models.Config;
+using System.Net.Http.Json;
 
 namespace Blog.Pages.CategoryView;
 
-public partial class Document(GitHubService gitHubService)
+public partial class Document(HttpClient httpClient, AppSettings appSettings)
 {
     private OrderType _currentOrderType = OrderType.CreateTime;
     private OrderType CurrentOrderType
@@ -47,8 +48,8 @@ public partial class Document(GitHubService gitHubService)
 
     protected override async Task OnInitializedAsync()
     {
-        documentFileTree = await gitHubService.GetDocumentFileTreeAsync();
-        documentFilePathAndCommitHistoryCollection = await gitHubService.GetDocumentFilePathAndCommitHistoryCollectionAsync();
+        documentFileTree = await httpClient.GetFromJsonAsync<FileTree>(appSettings.DocumentFileTreeUri);
+        documentFilePathAndCommitHistoryCollection = await httpClient.GetFromJsonAsync<FilePathAndCommitHistory[]>(appSettings.DocumentFilePathAndCommitHistoryCollectionUri) ?? [];
         FilterAndOrderCollection();
     }
 

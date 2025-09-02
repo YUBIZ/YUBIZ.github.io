@@ -1,3 +1,3 @@
 ﻿namespace Blog.Models.Config;
 
-public record AppSettings(string Title, string Email, string Author, GitHubServiceSettings GitHubServiceSettings);
+public record AppSettings(string Title, string Email, string Author, string DocumentFileTreeUri, string DocumentFilePathAndCommitHistoryCollectionUri);
