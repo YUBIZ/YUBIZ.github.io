@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace Blog.Services;
 
-public class GitHubService(HttpClient httpClient, GitHubSettings gitHubSettings)
+public class GitHubService(HttpClient httpClient, GitHubServiceSettings gitHubSettings)
 {
     public const string RawBaseAdddress = "https://raw.githubusercontent.com";
 

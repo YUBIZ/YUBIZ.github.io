@@ -9,7 +9,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddSingleton(builder.Configuration.Get<AppSettings>() ?? throw new InvalidOperationException("AppSettings를 찾을 수 없습니다."));
-builder.Services.AddSingleton(builder.Configuration.GetSection("GitHubSettings").Get<GitHubSettings>() ?? throw new InvalidOperationException("GitHubSettings를 찾을 수 없습니다."));
+builder.Services.AddSingleton(builder.Configuration.GetSection("GitHubServiceSettings").Get<GitHubServiceSettings>() ?? throw new InvalidOperationException("GitHubServiceSettings를 찾을 수 없습니다."));
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<GitHubService>();
