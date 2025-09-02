@@ -1,8 +1,0 @@
-﻿@page "/DocumentSiteMap"
-
-@inject Blog.Services.GitHubService gitHubService
-@inject NavigationManager navigationManager
-
-@{
-    navigationManager.NavigateTo($"{gitHubService.RawBaseAdddressWithParams}/DocumentSiteMap.xml");
-}
