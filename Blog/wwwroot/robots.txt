@@ -3,4 +3,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://raw.githubusercontent.com/YUBIZ/Posts/release/DocumentSiteMap.xml
+Sitemap: https://yubiz.github.io/document-sitemap.xml
