@@ -46,9 +46,9 @@ jobs:
       - name: Run script
         run: |
           dotnet tool install -g dotnet-script
-          dotnet script Scripts/Main.csx generate-file-path-and-commit-history-collection ./Posts/Docs ./Posts/document-file-path-and-commit-history-collection.json                                                            --exclude-patterns Docs/템플릿.md
-          dotnet script Scripts/Main.csx generate-file-tree                               ./Posts/Docs ./Posts/document-file-tree.json                                                                                          --exclude-patterns Docs/템플릿.md
-          dotnet script Scripts/Main.csx generate-site-map                                ./Posts/Docs ./Posts/document-site-map.xml                                  https://yubiz.github.io/PostView/Document?document-uri=   --exclude-patterns Docs/템플릿.md
+          dotnet script Scripts/Main.csx generate-file-path-and-commit-history-collection ./Posts/Docs ./Posts/document-file-path-and-commit-history-collection.json                                                         --exclude-patterns Docs/템플릿.md
+          dotnet script Scripts/Main.csx generate-file-tree                               ./Posts/Docs ./Posts/document-file-tree.json                                                                                       --exclude-patterns Docs/템플릿.md
+          dotnet script Scripts/Main.csx generate-sitemap                                 ./Posts/Docs ./Posts/document-sitemap.xml                                  https://yubiz.github.io/PostView/Document?document-uri= --exclude-patterns Docs/템플릿.md
 
       - name: Copy Content
         run: cp -r ./Posts/* ./Blog/wwwroot
