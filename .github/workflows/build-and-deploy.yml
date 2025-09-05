@@ -1,4 +1,4 @@
-name: Build and Deploy Blazor WebAssembly
+﻿name: Build and Deploy Blazor WebAssembly
 
 on:
   push:
@@ -31,37 +31,15 @@ jobs:
       - name: Create 404.html
         run: cp ./Blog/wwwroot/index.html ./Blog/wwwroot/404.html
 
-      - name: Clone Posts and Scripts Repositories
-        uses: actions/checkout@v5
-        with:
-          repository: YUBIZ/Posts
-          path: ./Posts
-          fetch-depth: 0
-
-      - uses: actions/checkout@v5
-        with:
-          repository: YUBIZ/Scripts
-          path: ./Scripts
-
-      - name: Run script
-        run: |
-          dotnet tool install -g dotnet-script
-          dotnet script Scripts/Main.csx generate-file-path-and-commit-history-collection ./Posts/Docs ./Posts/document-file-path-and-commit-history-collection.json                                                         --exclude-patterns Docs/템플릿.md
-          dotnet script Scripts/Main.csx generate-file-tree                               ./Posts/Docs ./Posts/document-file-tree.json                                                                                       --exclude-patterns Docs/템플릿.md
-          dotnet script Scripts/Main.csx generate-sitemap                                 ./Posts/Docs ./Posts/document-sitemap.xml                                  https://yubiz.github.io/PostView/Document?document-uri= --exclude-patterns Docs/템플릿.md
-
-      - name: Copy Content
-        run: cp -r ./Posts/* ./Blog/wwwroot
-
       - name: Build Blazor WebAssembly
         run: |
           dotnet restore
-          dotnet publish --no-restore -c Release --output ./publish
+          dotnet publish --no-restore -c Release
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./publish/wwwroot
+          path: ./Blog/bin/Release/net9.0/publish/wwwroot
 
   deploy:
     needs: build
