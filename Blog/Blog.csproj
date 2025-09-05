@@ -18,7 +18,7 @@
   </ItemGroup>
   
   <PropertyGroup>
-    <Cli>$(SolutionDir)/Cli/bin/$(Configuration)/$(TargetFramework)/Cli.exe</Cli>		
+    <Cli>$(SolutionDir)Cli/bin/$(Configuration)/$(TargetFramework)/Cli.exe</Cli>		
   </PropertyGroup>
   	
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
