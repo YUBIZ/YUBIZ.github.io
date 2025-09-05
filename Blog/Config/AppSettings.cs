@@ -1,3 +1,3 @@
-﻿namespace Blog.Models.Config;
+﻿namespace Blog.Config;
 
 public record AppSettings(string Title, string Email, string Author, string DocumentFileTreeUri, string DocumentFilePathAndCommitHistoryCollectionUri);

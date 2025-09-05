@@ -1,6 +1,6 @@
-﻿using Blog.Misc;
-using Blog.Models;
-using Blog.Models.Config;
+﻿using Blog.Config;
+using Blog.Misc;
+using Models;
 using System.Net.Http.Json;
 
 namespace Blog.Pages.CategoryView;

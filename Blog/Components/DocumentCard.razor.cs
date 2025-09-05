@@ -1,5 +1,5 @@
 ﻿using Blog.Misc.HttpClientExtensions;
-using Blog.Models;
+using Models;
 
 namespace Blog.Components;
 
