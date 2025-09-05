@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+Blog/wwwroot/document-file-path-and-commit-history-collection.json
+Blog/wwwroot/document-file-tree.json
+Blog/wwwroot/document-sitemap.xml
