@@ -18,13 +18,15 @@
   </ItemGroup>
   
   <PropertyGroup>
-    <Cli>$(SolutionDir)Cli/bin/$(Configuration)/$(TargetFramework)/Cli.exe</Cli>		
+    <Cli>$(SolutionDir)/Cli/bin/$(Configuration)/$(TargetFramework)/Cli.dll</Cli>
+	<Documents>./wwwroot/Documents</Documents>
+	<ExcludePatterns>--exclude-patterns *템플릿.md</ExcludePatterns>
   </PropertyGroup>
   	
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="$(Cli) generate-file-tree                               ./wwwroot/documents ./wwwroot/document-file-tree.json                                                                                       --exclude-patterns *템플릿.md" />
-    <Exec Command="$(Cli) generate-file-path-and-commit-history-collection ./wwwroot/documents ./wwwroot/document-file-path-and-commit-history-collection.json                                                         --exclude-patterns *템플릿.md" />
-	  <Exec Command="$(Cli) generate-sitemap                                 ./wwwroot/documents ./wwwroot/document-sitemap.xml                                  https://yubiz.github.io/PostView/Document?document-uri= --exclude-patterns *템플릿.md" />
+    <Exec Command="dotnet $(Cli) generate-file-tree                               $(Documents) ./wwwroot/document-file-tree.json                                                                                       $(ExcludePatterns)" />
+    <Exec Command="dotnet $(Cli) generate-file-path-and-commit-history-collection $(Documents) ./wwwroot/document-file-path-and-commit-history-collection.json                                                         $(ExcludePatterns)" />
+    <Exec Command="dotnet $(Cli) generate-sitemap                                 $(Documents) ./wwwroot/document-sitemap.xml                                  https://yubiz.github.io/PostView/Document?document-uri= $(ExcludePatterns)" />
   </Target>
 
 </Project>
