@@ -16,5 +16,15 @@
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
+  
+  <PropertyGroup>
+    <Cli>$(SolutionDir)/Cli/bin/$(Configuration)/$(TargetFramework)/Cli.exe</Cli>		
+  </PropertyGroup>
+  	
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="$(Cli) generate-file-tree                               ./wwwroot/documents ./wwwroot/document-file-tree.json                                                                                       --exclude-patterns *템플릿.md" />
+    <Exec Command="$(Cli) generate-file-path-and-commit-history-collection ./wwwroot/documents ./wwwroot/document-file-path-and-commit-history-collection.json                                                         --exclude-patterns *템플릿.md" />
+	  <Exec Command="$(Cli) generate-sitemap                                 ./wwwroot/documents ./wwwroot/document-sitemap.xml                                  https://yubiz.github.io/PostView/Document?document-uri= --exclude-patterns *템플릿.md" />
+  </Target>
 
 </Project>
