@@ -10,12 +10,12 @@ public class ImageExtension : IMarkdownExtension
 {
     public void Setup(MarkdownPipelineBuilder pipeline)
     {
-        pipeline.DocumentProcessed += SetupMaxWidth;
+        pipeline.DocumentProcessed += SetupWidth;
     }
 
     public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer) { }
 
-    private void SetupMaxWidth(MarkdownDocument document)
+    private void SetupWidth(MarkdownDocument document)
     {
         foreach (var item in document.Descendants<LinkInline>())
         {
