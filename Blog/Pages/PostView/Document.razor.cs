@@ -1,4 +1,5 @@
 ﻿using Blog.Helpers;
+using Blog.Markdig;
 using Markdig;
 using Microsoft.AspNetCore.Components;
 using Models;
@@ -17,7 +18,7 @@ public partial class Document(HttpClient httpClient)
 
         documentMetadata = YamlHelper.DeserializeYamlFrontMatter<DocumentMetadata>(raw);
 
-        MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().Build();
+        MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter().Use<ImageExtension>().Build();
         documentContent = (MarkupString)Markdown.ToHtml(raw, markdownPipeline);
     }
 }
