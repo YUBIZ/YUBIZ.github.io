@@ -12,7 +12,7 @@ public partial class Document(HttpClient httpClient)
 
     private MarkupString documentContent;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         var raw = await httpClient.GetStringAsync(DocumentUri);
 
