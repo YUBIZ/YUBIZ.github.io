@@ -1,6 +1,6 @@
 ﻿namespace Models;
 
-public record struct FileTree(DirectoryNameAndFileNames Value, FileTree[] SubTrees)
+public readonly record struct FileTree(DirectoryNameAndFileNames Value, FileTree[] SubTrees)
 {
     public static implicit operator Tree<DirectoryNameAndFileNames>(FileTree fileTree)
         => new(fileTree.Value, fileTree.SubTrees.Select(v => (Tree<DirectoryNameAndFileNames>)v).ToArray());
