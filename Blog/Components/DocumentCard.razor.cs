@@ -1,4 +1,4 @@
-﻿using Blog.Misc.HttpClientExtensions;
+﻿using Blog.Misc;
 using Models;
 
 namespace Blog.Components;

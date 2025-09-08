@@ -1,9 +1,9 @@
 ﻿using Blog.Helpers;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Blog.Misc.HttpClientExtensions;
+namespace Blog.Misc;
 
-public static class YamlHttpClientExtension
+public static class YamlHttpClientExtensions
 {
     public static async Task<T?> GetFromYamlAsync<T>(this HttpClient httpClient, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri)
     => YamlHelper.DeserializeYaml<T>(await httpClient.GetStringAsync(requestUri));
