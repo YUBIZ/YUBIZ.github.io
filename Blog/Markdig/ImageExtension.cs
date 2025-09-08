@@ -21,7 +21,7 @@ public class ImageExtension : IMarkdownExtension
         {
             if (item.IsImage)
             {
-                item.GetAttributes().AddProperty("style", "width: 100%;");
+                item.GetAttributes().AddProperty("style", "width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain;");
             }
         }
     }
