@@ -57,8 +57,6 @@ public partial class Document(HttpClient httpClient, AppSettings appSettings)
     {
         var collection = documentFilePathAndCommitHistoryCollection.Where(v => v.FilePath.StartsWith(DocumentCategory));
 
-        Func<FilePathAndCommitHistory, string> orderTitleFunc = v => v.FilePath;
-
         Func<FilePathAndCommitHistory, object> orderFunc = CurrentOrderType switch
         {
             OrderType.CreateTime => (v => v.CommitHistory.Min(v1 => v1.Date)),
@@ -68,8 +66,8 @@ public partial class Document(HttpClient httpClient, AppSettings appSettings)
 
         collection = CurrentOrderDirection switch
         {
-            OrderDirection.Ascending => collection.OrderBy(orderFunc).ThenBy(orderTitleFunc),
-            OrderDirection.Descending => collection.OrderByDescending(orderFunc).ThenByDescending(orderTitleFunc),
+            OrderDirection.Ascending => collection.OrderBy(orderFunc).ThenBy(v => v.FilePath),
+            OrderDirection.Descending => collection.OrderByDescending(orderFunc).ThenByDescending(v => v.FilePath),
             _ => throw new NotImplementedException()
         };
 
