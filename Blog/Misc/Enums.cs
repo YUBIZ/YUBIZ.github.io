@@ -1,12 +1,12 @@
 ﻿namespace Blog.Misc;
 
-enum OrderType
+public enum OrderType
 {
     CreateTime,
     LastUpdateTime,
 }
 
-enum OrderDirection
+public enum OrderDirection
 {
     Ascending,
     Descending
