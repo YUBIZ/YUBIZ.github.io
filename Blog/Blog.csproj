@@ -34,4 +34,19 @@
 	<Content Include="./wwwroot/document-file-tree.json;./wwwroot/document-file-path-and-commit-history-collection.json;./wwwroot/document-sitemap.xml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Localization\Enums.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Enums.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Localization\Enums.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Enums.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
