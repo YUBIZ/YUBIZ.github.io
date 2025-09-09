@@ -7,7 +7,7 @@ namespace Blog.Pages.CategoryView;
 
 public partial class Document(HttpClient httpClient, AppSettings appSettings)
 {
-    private OrderType _currentOrderType = OrderType.CreateTime;
+    private OrderType _currentOrderType = OrderType.CreationTime;
     private OrderType CurrentOrderType
     {
         get => _currentOrderType;
@@ -59,8 +59,8 @@ public partial class Document(HttpClient httpClient, AppSettings appSettings)
 
         Func<FilePathAndCommitHistory, object> orderFunc = CurrentOrderType switch
         {
-            OrderType.CreateTime => (v => v.CommitHistory.Min(v1 => v1.Date)),
-            OrderType.LastUpdateTime => (v => v.CommitHistory.Max(v1 => v1.Date)),
+            OrderType.CreationTime => (v => v.CommitHistory.Min(v1 => v1.Date)),
+            OrderType.LastModificationTime => (v => v.CommitHistory.Max(v1 => v1.Date)),
             _ => throw new NotImplementedException()
         };
 

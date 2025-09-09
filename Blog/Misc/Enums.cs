@@ -2,8 +2,8 @@
 
 public enum OrderType
 {
-    CreateTime,
-    LastUpdateTime,
+    CreationTime,
+    LastModificationTime,
 }
 
 public enum OrderDirection
