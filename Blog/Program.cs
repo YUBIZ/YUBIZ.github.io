@@ -11,4 +11,6 @@ builder.Services.AddSingleton(builder.Configuration.Get<AppSettings>() ?? throw 
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+builder.Services.AddLocalization();
+
 await builder.Build().RunAsync();
